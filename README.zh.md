@@ -2,9 +2,19 @@
 
 [English](README.md) | 中文
 
+> **本仓库是 Lh0326 维护的 [deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) Fork。** 可从这里获取源码，学习和扩展上游框架。相关项目 [dsh-pet-desktop](https://github.com/Lh0326/dsh-pet-desktop) 在独立仓库中提供桌面宠物交互界面。
+
 DeepSeek Harness（`dsh`）是由 [DeepSeek AI](https://deepseek.com) 开发的开源 agent harness（智能体框架）。
 
 它采用**一切皆插件**的架构，并由 [Cordis](https://github.com/cordiverse/cordis) 驱动，其设计参见论文 [_A Programming Paradigm for Spatiotemporal Composability_](https://github.com/cordiverse/paper)。
+
+## 可以从这里探索什么
+
+- **运行 agent：** 通过 Web UI 或 headless 配置处理项目文件、命令、计划与委派任务。
+- **组合能力：** 通过 Cordis 插件和配置组合模型提供方、工具、权限与会话服务。
+- **开发集成：** 使用 TypeScript 或 Python SDK，或基于已有扩展点开发插件。
+
+这些能力来自上游项目。下文分别说明本 Fork 的源码运行方式与上游 npm 发布包的体验方式。
 
 ## 开发者预览
 
@@ -14,25 +24,37 @@ DeepSeek Harness 目前处于 _开发者预览_ 阶段，正在快速迭代。**
 
 ### 通过 `npm` 运行
 
-安装 `Node.js`，然后运行：
+准备 Node.js 22.x 中的 22.19+ 版本，或 Node.js 24+，然后运行上游发布包：
 
 ```sh
 npx @deepseek-ai/dsh web
 ```
 
-该命令会启动 Web UI，默认地址为 `http://127.0.0.1:3080`。详见 [Web UI 指南](docs/user/guide/index.md)。
+该命令会启动 Web UI，默认地址为 `http://127.0.0.1:3080`。打开 **Settings → Models** 配置模型提供方，选择工作区后再发送任务。详见 [Web UI 指南](docs/user/guide/index.md)。
 
 ### 从源码运行
 
-如需从仓库源码运行：
+运行本 Fork 需要满足相同的 Node.js 要求，并使用 [package.json](package.json) 固定的 `pnpm@11.7.0`。安装与构建需要网络连接，执行模型任务需要配置模型提供方。
 
 ```sh
-git clone https://github.com/deepseek-ai/deepseek-harness.git
-cd deepseek-harness
-pnpm install
+git clone https://github.com/Lh0326/dsh.git
+cd dsh
+pnpm install --frozen-lockfile
 pnpm run build
 pnpm dsh web
 ```
+
+服务启动后会打印访问地址。其他启动模式和参数见 [CLI 参考](apps/cli/README.md)。如遇安装问题，先核对运行时版本与[开发指南](docs/development.md)，再考虑调整锁文件。
+
+## 源码阅读地图
+
+| 从这里开始 | 内容 |
+|---|---|
+| [架构设计](docs/architecture.md) | 插件组合、agent loop（智能体循环）与扩展点 |
+| [包分组](packages/README.md) | 各类能力在包之间的分工 |
+| [可运行示例](examples/README.md) | 示例配置与应用入口 |
+| [插件开发](docs/user/develop/basic/) | 创建并组合自己的插件 |
+| [TypeScript SDK](packages/sdk/README.md) / [Python SDK](python/README.md) | 将框架集成到其他应用 |
 
 ## 社区与支持
 
